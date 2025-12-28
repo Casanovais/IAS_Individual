@@ -1,0 +1,26 @@
+# --- Python & Environment ---
+__pycache__/
+*.pyc
+venv/
+.env
+.DS_Store
+
+# --- IDE Settings ---
+.vscode/
+.idea/
+
+# --- Large Data Folders ---
+# We ignore these because they are generated or too big.
+# We only want to keep the CODE and the FINAL REPORT.
+output/
+results/
+privacy_results/
+
+# Optional: Ignore input if you want users to download data themselves
+# (Or keep it if the files are small)
+input/*.zip
+input/archive/
+
+# --- Keep these! ---
+!MASTER_RESULTS.csv
+!tradeoff_chart_final.png
