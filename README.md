@@ -53,15 +53,15 @@ python submission/scripts/generate_all_visuals.py
 
 Output: This will generate the following high-resolution charts in your current directory:
 
- chart_k_sensitivity.png: Impact of $k$-neighbors on privacy risk.
+chart_k_sensitivity.png: Impact of k-neighbors on privacy risk.
 
- chart_price_of_progress.png: Bar chart visualizing Accuracy Loss vs. Fairness Gain.
+chart_price_of_progress.png: Bar chart visualizing Accuracy Loss vs. Fairness Gain.
 
- chart_bias_privacy_correlation.png: The "Three-Way Knot" correlation plot.
+chart_bias_privacy_correlation.png: The "Three-Way Knot" correlation plot.
 
- chart_pareto_cloud.png: Detailed trade-off scatter plot for the Adult dataset.
+chart_pareto_cloud.png: Detailed trade-off scatter plot for the Adult dataset.
 
- chart_optimization.png: Runtime comparison (Naive vs. Hash-Based Audit).
+chart_optimization.png: Runtime comparison (Naive vs. Hash-Based Audit).
 
 3. Verify Analytical Claims
 
@@ -74,17 +74,21 @@ python submission/scripts/check_price_progress.py
 python submission/scripts/check_results.py
 
 
- Key Findings
+Key Findings
 
-The "Three-Way Knot" Exists: We found a strong negative correlation between Privacy and Fairness ($r < 0$). Stricter anonymization often degrades the model's ability to detect and correct bias.
+The "Three-Way Knot" Exists
+We found a strong negative correlation between Privacy and Fairness (r < 0). Stricter anonymization often degrades the model's ability to detect and correct bias.
 
-Privacy is Expensive: On the Heart Disease dataset, privacy noise reduced utility by ~8% without improving fairness, highlighting the fragility of small medical datasets.
+Privacy is Expensive
+On the Heart Disease dataset, privacy noise reduced utility by ~8% without improving fairness, highlighting the fragility of small medical datasets.
 
-The "Free Lunch" Anomaly: The Bank Marketing dataset showed that privacy noise can sometimes act as a regularizer, improving fairness by 65% with negligible utility loss.
+The "Free Lunch" Anomaly
+The Bank Marketing dataset showed that privacy noise can sometimes act as a regularizer, improving fairness by 65% with negligible utility loss.
 
-The Imbalance Trap: For the German Credit dataset, privacy mechanisms failed to fix bias (Fairness stuck at 1.00), effectively "locking in" discrimination due to the Curse of Dimensionality.
+The Imbalance Trap
+For the German Credit dataset, privacy mechanisms failed to fix bias (Fairness stuck at 1.00), effectively "locking in" discrimination due to the Curse of Dimensionality.
 
- References & Credits
+References & Credits
 
 This project builds upon the foundational work of Carvalho et al. (EPIA 2023).
 
