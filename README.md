@@ -56,9 +56,9 @@ pip install pandas numpy seaborn matplotlib scikit-learn fairlearn
 2. Reproduce All Figures
 
 To regenerate every visualization and statistical result reported in the paper, run:
-
+```bash
 python submission/scripts/generate_all_visuals.py
-
+```
 This script generates the following high-resolution figures in the working directory:
 
     chart_k_sensitivity.png
