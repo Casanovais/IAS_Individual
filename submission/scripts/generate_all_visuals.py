@@ -161,3 +161,63 @@ plt.legend(title="Trade-off Metrics")
 plt.tight_layout()
 plt.savefig("chart_price_of_progress.png")
 print("Saved chart_price_of_progress.png")
+
+# ==========================================
+# CHART 6: TRADEOFF CHART WITH ARROWS (from visualize_final.py)
+# ==========================================
+plt.figure(figsize=(12, 8))
+markers = {"Original": "X", "Synthetic": "o"}
+sns.scatterplot(
+    data=df, 
+    x="privacy_risk", 
+    y="test_accuracy", 
+    hue="dataset", 
+    style="type", 
+    markers=markers,
+    s=150, 
+    alpha=0.8,
+    palette="deep"
+)
+datasets = df['dataset'].unique()
+for ds in datasets:
+    ds_data = df[df['dataset'] == ds]
+    original = ds_data[ds_data['type'] == 'Original']
+    if not original.empty:
+        start_x = original.iloc[0]['privacy_risk']
+        start_y = original.iloc[0]['test_accuracy']
+        synthetics = ds_data[ds_data['type'] == 'Synthetic']
+        for _, row in synthetics.iterrows():
+            plt.annotate("", 
+                         xy=(row['privacy_risk'], row['test_accuracy']), 
+                         xytext=(start_x, start_y),
+                         arrowprops=dict(arrowstyle="->", color="gray", alpha=0.3, lw=1.5))
+plt.title("The Trade-off: How Privacy & Utility Change", fontsize=16)
+plt.xlabel("Re-identification Risk (%) (Lower is Better)", fontsize=12)
+plt.ylabel("Model Accuracy (Higher is Better)", fontsize=12)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.xlim(-5, 105)
+plt.tight_layout()
+plt.savefig("tradeoff_chart_final.png")
+print("Saved tradeoff_chart_final.png")
+
+# ==========================================
+# CHART 7: SIMPLE TRADEOFF CHART (from visualize_results.py)
+# ==========================================
+df_clean = df.dropna(subset=['privacy_risk'])
+plt.figure(figsize=(10, 6))
+sns.scatterplot(
+    data=df_clean, 
+    x="privacy_risk", 
+    y="test_accuracy", 
+    hue="dataset", 
+    style="dataset", 
+    s=100, 
+    alpha=0.8
+)
+plt.title("The Three-Way Knot: Utility vs Privacy Trade-off", fontsize=16)
+plt.xlabel("Re-identification Risk (%) (Lower is Better)", fontsize=12)
+plt.ylabel("Model Accuracy (Higher is Better)", fontsize=12)
+plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+plt.tight_layout()
+plt.savefig("tradeoff_chart.png")
+print("Saved tradeoff_chart.png")

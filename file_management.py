@@ -10,25 +10,23 @@ folders = {
         "chart_pareto_cloud.png",
         "chart_price_of_progress.png",
         "tradeoff_chart_final.png",
-        "tradeoff_chart.png",          # Added missing file
-        "chart_bubble_tradeoff.png",   # Added missing file
-        "chart_3d_knot.html",          # Added missing HTML visualization
-        "chart_parallel_coords.html"   # Added missing HTML visualization
+        "tradeoff_chart.png",
+        "chart_bubble_tradeoff.png",
+        "chart_3d_knot.html",
+        "chart_parallel_coords.html"
     ],
     "submission/scripts": [
         "analyze_advanced.py",
         "analyze_results.py",
         "check_price_progress.py",
         "check_results.py",
-        "generate_all_visuals.py",
-        "generate_pareto_cloud.py",
-        "generate_extended_visuals.py", # Added missing script
-        "visualize_final.py",           # Added visualization script
-        "visualize_results.py"          # Added visualization script
+        "generate_all_visuals.py",  # This now contains the Pareto Cloud logic
+        "legacy_visualizations.py", # Contains original visualization logic
+        "visualize_advanced.py"     # Contains HTML visualization logic
     ],
     "submission/report": [
         "report.tex",
-        "report.pdf" # If you have the PDF locally
+        "report.pdf" 
     ]
 }
 
