@@ -53,7 +53,7 @@ Install dependencies:
 pip install pandas numpy seaborn matplotlib scikit-learn fairlearn
 ```
 
-2. Reproduce All Figures
+### 2. Reproduce All Figures
 
 To regenerate every visualization and statistical result reported in the paper, run:
 ```bash
@@ -76,15 +76,18 @@ This script generates the following high-resolution figures in the working direc
     chart_optimization.png
     Runtime comparison (naïve vs. hash-based audit)
 
-3. Verify Analytical Claims
+### 3. Verify Analytical Claims
 
 To reproduce the exact numerical claims cited in the report (e.g., relative fairness gains or accuracy drops), run:
 
 # Verifies relative changes in fairness and utility
+```bash
 python submission/scripts/check_price_progress.py
-
+```
 # Generates the full statistical summary table (mean / standard deviation)
+```bash
 python submission/scripts/check_results.py
+```
 
 Key Findings
 The Three-Way Knot Exists
