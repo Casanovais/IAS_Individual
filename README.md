@@ -51,6 +51,7 @@ Install dependencies:
 
 ```bash
 pip install pandas numpy seaborn matplotlib scikit-learn fairlearn
+```
 
 2. Reproduce All Figures
 
