@@ -80,9 +80,9 @@ This project builds upon the foundational work of Carvalho et al. (EPIA 2023).
 
     Original Paper: A Three-Way Knot: Privacy, Fairness, and Predictive Performance Dynamics
 
-    Original Code: GitHub Repository
+    Original Code: https://github.com/tmcarvalho/three-way-knot
 
-    Author: Rafael Casanovais
+Author: Rafael Santos Novais
 
-    Institution: University of Porto
+Institution: University of Porto
 
