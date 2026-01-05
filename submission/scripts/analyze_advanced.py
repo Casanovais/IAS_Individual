@@ -3,18 +3,41 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy import stats
+import os
+import sys
+
+# Ensure project root is in sys.path, foi um pequeno ajuste para garantir que os scripts funcionem corretamente
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, "../../"))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+
 
 # --- CONFIGURATION ---
-# UPDATE THIS PATH if needed, just like you did for s.py
+# UPDATE THIS PATH IF NEEDED (I dont think it needs to be changed but will leave it here for future me)
 RESULTS_PATH = "MASTER_RESULTS.csv"
 PARETO_METRIC = 'test_f1_weighted'  # Using F1 instead of Accuracy for better results
 
 def load_data():
-    try:
-        df = pd.read_csv(RESULTS_PATH)
-    except FileNotFoundError:
-        # Fallback if file is in current dir
-        df = pd.read_csv("MASTER_RESULTS.csv")
+    # Define paths to check: current dir, parent, two levels up (root)
+    possible_paths = [
+        "MASTER_RESULTS.csv",
+        "../MASTER_RESULTS.csv",
+        "../../MASTER_RESULTS.csv"
+    ]
+    
+    df = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            print(f"Loading data from: {path}")
+            df = pd.read_csv(path)
+            break
+            
+    if df is None:
+        print("Error: MASTER_RESULTS.csv not found!")
+        sys.exit(1)
         
     # 1. Cleanup
     if 'type' not in df.columns:

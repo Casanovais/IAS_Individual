@@ -1,31 +1,57 @@
+# LEGACY VISUALIZATIONS SCRIPT
+# This script contains visualization functions from previous versions.
+# In a sense it groups together visualizations from visualize_final.py and visualize_results.py
+# These functions can be called independently as needed and there is the respective files for them inside the folder
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
+import sys
+
+# Ensure project root is in sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, "../../"))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# --- HELPER FUNCTION FOR CSV LOADING ---
+def load_robust_csv():
+    possible_paths = [
+        "MASTER_RESULTS.csv",
+        "../MASTER_RESULTS.csv",
+        "../../MASTER_RESULTS.csv"
+    ]
+    for path in possible_paths:
+        if os.path.exists(path):
+            print(f"Loading data from: {path}")
+            return pd.read_csv(path)
+    return None
 
 # ==========================================
 # FROM visualize_final.py
 # ==========================================
 def generate_tradeoff_with_arrows():
     print("Generating Trade-off Chart with Arrows...")
-    # Load data
-    try:
-        df = pd.read_csv("MASTER_RESULTS.csv")
-    except FileNotFoundError:
+    
+    # 1. Load data using robust loader
+    df = load_robust_csv()
+    if df is None:
         print("Error: MASTER_RESULTS.csv not found.")
         return
 
-    # 1. Fix Missing 'type' column if it doesn't exist
+    # 2. Fix Missing 'type' column if it doesn't exist, it caused some issues before
     if 'type' not in df.columns:
         df['type'] = df['filename'].apply(lambda x: 'Synthetic' if '_knn' in str(x) else 'Original')
 
-    # 2. Fix Missing Privacy Risk for Originals (Default to 100%)
+    # 3. Fix Missing Privacy Risk for Originals (Default to 100%)
     df.loc[df['type'] == 'Original', 'privacy_risk'] = df.loc[df['type'] == 'Original', 'privacy_risk'].fillna(100.0)
 
     # Set style
     sns.set_style("whitegrid")
     plt.figure(figsize=(12, 8))
 
-    # 3. Create the Chart with Distinct Markers
+    # 4. Create the Chart with Distinct Markers
     markers = {"Original": "X", "Synthetic": "o"}
 
     sns.scatterplot(
@@ -40,7 +66,7 @@ def generate_tradeoff_with_arrows():
         palette="deep"
     )
 
-    # 4. Draw Arrows (Vectors) to show the "Change"
+    # 5. Draw Arrows (Vectors) to show the "Change"
     datasets = df['dataset'].unique()
     for ds in datasets:
         ds_data = df[df['dataset'] == ds]
@@ -74,10 +100,10 @@ def generate_tradeoff_with_arrows():
 # ==========================================
 def generate_simple_tradeoff():
     print("Generating Simple Trade-off Chart...")
-    # Load data
-    try:
-        df = pd.read_csv("MASTER_RESULTS.csv")
-    except FileNotFoundError:
+    
+    # 1. Load data using robust loader
+    df = load_robust_csv()
+    if df is None:
         print("Error: MASTER_RESULTS.csv not found.")
         return
 

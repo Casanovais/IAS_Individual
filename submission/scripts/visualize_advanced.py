@@ -3,9 +3,34 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
+import os
+import sys
+
+# Ensure project root is in sys.path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.abspath(os.path.join(current_dir, "../../"))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+# --- HELPER FUNCTION FOR CSV LOADING ---
+def load_robust_csv():
+    possible_paths = [
+        "MASTER_RESULTS.csv",
+        "../MASTER_RESULTS.csv",
+        "../../MASTER_RESULTS.csv"
+    ]
+    for path in possible_paths:
+        if os.path.exists(path):
+            print(f"Loading data from: {path}")
+            return pd.read_csv(path)
+    return None
 
 # --- 1. DATA PREPARATION ---
-df = pd.read_csv("MASTER_RESULTS.csv")
+df = load_robust_csv()
+
+if df is None:
+    print("Error: MASTER_RESULTS.csv not found in root or current directory.")
+    sys.exit(1)
 
 # Ensure 'type' exists
 if 'type' not in df.columns:
@@ -58,7 +83,9 @@ plt.savefig("chart_bubble_tradeoff.png")
 print("Saved chart_bubble_tradeoff.png")
 
 # --- VISUALIZATION 2: 3D Interactive Plot (Plotly) ---
-# This allows you to rotate and see the 'Knot' structure
+# This allows you to rotate and see the 'Knot' structure, not that very good at visualization Ill tell you that ahahah
+# At first I had "Bad ->" or "Good ->"  but depending on the orientation the arrows would point to different directions so I removed them
+# Now they have "^" meaning "Higher is Better" or "Higher is Worse" depending on the metric
 fig = px.scatter_3d(
     df, 
     x='privacy_risk', 
@@ -75,7 +102,7 @@ fig = px.scatter_3d(
     }
 )
 fig.update_layout(scene = dict(
-                    xaxis_title='Privacy Risk (Bad ->)',
+                    xaxis_title='Privacy Risk (Bad ^)',
                     yaxis_title='Accuracy (Good ^)',
                     zaxis_title='Fairness (Good ^)'),
                     margin=dict(r=20, b=10, l=10, t=40))

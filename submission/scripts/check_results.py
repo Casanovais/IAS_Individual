@@ -1,11 +1,26 @@
 import pandas as pd
+import os
+import sys
 
-# 1. Load Data
-try:
-    # Use the full path if running in the original environment, or local path
-    df = pd.read_csv("casanovais/ias_individual/IAS_Individual-4203380b0d53a6b9681d9aef3ecd41c0727b1ee3/MASTER_RESULTS.csv")
-except FileNotFoundError:
-    df = pd.read_csv("MASTER_RESULTS.csv")
+# --- ROBUST CSV LOADING START ---
+possible_paths = [
+    "MASTER_RESULTS.csv",
+    "../MASTER_RESULTS.csv",
+    "../../MASTER_RESULTS.csv",
+    "../../../MASTER_RESULTS.csv"
+]
+
+df = None
+for path in possible_paths:
+    if os.path.exists(path):
+        print(f"Loading data from: {path}")
+        df = pd.read_csv(path)
+        break
+
+if df is None:
+    print("Error: MASTER_RESULTS.csv not found. Please ensure you are running this from the project root or submission/scripts folder.")
+    sys.exit(1)
+# --- ROBUST CSV LOADING END ---
 
 # 2. Cleanup & Preprocessing
 # Ensure 'type' column exists or infer it
